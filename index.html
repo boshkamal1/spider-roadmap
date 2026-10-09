@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-style="neon">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#0a0d14">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Spider Roadmap">
+<title>Spider-Verse Data Engineering Roadmap</title>
+<style>
+:root{--red:#d6004a;--blue:#0077a8;--bg:#f3f5fa;--card:#fff;--line:#d9e0ec;--text:#0f172a;--muted:#52607a;--gold:#8a5a00;--gr:rgba(214,0,74,.16);--gb:rgba(0,119,168,.16);--grid:rgba(15,23,42,.05);--track:#e2e8f0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--red:#ff4d88;--blue:#38d6ff;--bg:#0a0d14;--card:#121824;--line:#1e293b;--text:#f8fafc;--muted:#94a3b8;--gold:#ffcc00;--gr:rgba(255,0,85,.28);--gb:rgba(0,210,255,.22);--grid:rgba(255,255,255,.04);--track:#1e293b}}
+:root[data-theme="dark"]{--red:#ff4d88;--blue:#38d6ff;--bg:#0a0d14;--card:#121824;--line:#1e293b;--text:#f8fafc;--muted:#94a3b8;--gold:#ffcc00;--gr:rgba(255,0,85,.28);--gb:rgba(0,210,255,.22);--grid:rgba(255,255,255,.04);--track:#1e293b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,"Segoe UI",Roboto,sans-serif;line-height:1.55;padding:20px;color:var(--text);background-color:var(--bg);background-image:radial-gradient(circle at 50% 0,var(--gr),transparent 60%),linear-gradient(90deg,var(--grid) 1px,transparent 1px),linear-gradient(var(--grid) 1px,transparent 1px);background-size:100% 100%,30px 30px,30px 30px}
+.wrap{max-width:900px;margin:0 auto}
+.top{text-align:center;padding:28px 20px;margin-bottom:28px;border-radius:16px;border-bottom:3px solid var(--red);background:linear-gradient(180deg,var(--gr),transparent);box-shadow:0 0 25px var(--gr)}
+.top h1{font-size:clamp(1.25rem,4.5vw,2rem);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.top p{color:var(--blue);font-weight:600}
+.progress{background:var(--card);border:2px solid var(--blue);border-radius:16px;padding:20px;margin-bottom:28px;box-shadow:0 0 15px var(--gb)}
+.ptop{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 12px;margin-bottom:12px;font-weight:700}
+.track{height:22px;border-radius:11px;overflow:hidden;background:var(--track);border:1px solid var(--line)}
+#bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--red));transition:width .4s ease}
+#quote{margin-top:14px;min-height:1.6em;text-align:center;font-style:italic;color:var(--gold)}
+.reset{display:block;margin:14px auto 0;padding:6px 16px;border-radius:8px;cursor:pointer;font:inherit;font-size:.85rem;color:var(--red);background:transparent;border:1px solid var(--red);transition:background .2s,color .2s}
+.reset:hover,.reset:focus-visible{background:var(--red);color:var(--card)}
+.mission{background:var(--card);border:2px solid var(--line);border-radius:16px;margin-bottom:24px;overflow:hidden;transition:border-color .3s,box-shadow .3s}
+.mission:hover,.mission.complete{border-color:var(--red);box-shadow:0 0 20px var(--gr)}
+.mh{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;padding:14px 20px;background:var(--grid);border-bottom:1px solid var(--line)}
+.badge{padding:2px 12px;border-radius:20px;border:1px solid var(--red);background:var(--gr);color:var(--red);font-size:.8rem;font-weight:700;letter-spacing:1px}
+.mh h2{flex:1;min-width:220px;font-size:1.1rem;color:var(--blue)}
+.range,.count{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+ul{list-style:none;padding:8px 12px}
+li+li{border-top:1px solid var(--line)}
+label{position:relative;display:flex;align-items:flex-start;gap:14px;padding:12px 8px;border-radius:10px;cursor:pointer;transition:background .2s}
+label:hover{background:var(--grid)}
+input{position:absolute;opacity:0;width:1px;height:1px}
+.box{flex:none;display:grid;place-items:center;border:2px solid var(--blue);transition:background .2s,border-color .2s,box-shadow .2s}
+input:checked+.box{background:var(--red);border-color:var(--red);box-shadow:0 0 10px var(--gr)}
+input:focus-visible+.box{outline:3px solid var(--blue);outline-offset:2px}
+.topic{padding:0;margin:0;list-style:none}
+.topic-label{align-items:center;gap:12px;padding:12px 8px}
+.topic-box{width:28px;height:28px;margin-top:0;border-radius:8px}
+.topic-toggle:checked+.topic-box::after{content:"🕷️";font-size:15px;line-height:1}
+.topic-toggle:indeterminate+.topic-box{background:var(--gb);border-color:var(--blue)}
+.topic-toggle:indeterminate+.topic-box::after{content:"•";font-size:22px;line-height:1;color:var(--blue)}
+.topic-copy{min-width:0;flex:1}
+.topic-title{font-size:1rem}
+.topic.is-complete .topic-title{text-decoration:line-through;color:var(--muted)}
+.courses{padding:0 12px 12px 48px}
+.course-item{list-style:none}
+.course-label{align-items:center;gap:10px;padding:8px;border-radius:8px}
+.course-box{width:19px;height:19px;margin-top:0;border-radius:5px}
+.course-toggle:checked+.course-box::after{content:"✓";font-size:13px;font-weight:800;line-height:1}
+.course-copy{min-width:0;display:block}
+.course-copy strong{font-size:.9rem;font-weight:600}
+.course-item.done .course-copy strong{text-decoration:line-through;color:var(--muted)}
+.course-ref{margin:0 0 2px;font-size:.73rem;color:var(--blue);overflow-wrap:anywhere}
+@media(max-width:540px){.courses{padding-left:28px}.topic-label{gap:9px;padding-inline:4px}.course-label{padding-inline:4px}}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px}
+.row i{font-style:normal;font-size:.75rem;color:var(--blue);border:1px solid var(--line);border-radius:12px;padding:0 10px}
+.row i.date{color:var(--red);border-color:var(--red)}
+small{display:block;margin-top:4px;font-size:.88rem;color:var(--muted)}
+small strong{color:var(--text)}
+.done b{text-decoration:line-through;color:var(--muted)}
+.note{margin:4px 12px 14px;padding:8px 14px;border-radius:10px;background:var(--grid);border-inline-start:3px solid var(--red);font-size:.85rem;color:var(--muted)}
+footer{text-align:center;padding:20px;font-size:.9rem;color:var(--muted)}
+.checklist-hint{text-align:center;margin:-12px 0 20px;color:var(--muted);font-size:.9rem}
+#toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);max-width:min(92vw,520px);padding:12px 18px;border-radius:12px;background:var(--card);border:2px solid var(--red);color:var(--text);font-weight:600;text-align:center;box-shadow:0 0 20px var(--gr);opacity:0;pointer-events:none;transition:opacity .3s,transform .3s}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Three selectable visual directions */
+:root[data-style="neon"]{color-scheme:dark;--red:#ff3f80;--blue:#43dcff;--bg:#080b15;--card:#10172a;--line:#273553;--text:#f4f7ff;--muted:#9daec9;--gold:#ffe27a;--gr:rgba(255,45,120,.2);--gb:rgba(67,220,255,.17);--grid:rgba(255,255,255,.045);--track:#1a2540}
+:root[data-style="comic"]{color-scheme:light;--red:#dc3046;--blue:#167bc0;--bg:#fff7e7;--card:#fffdf7;--line:#272323;--text:#211e1c;--muted:#625c57;--gold:#a45500;--gr:rgba(220,48,70,.11);--gb:rgba(22,123,192,.13);--grid:rgba(20,20,20,.045);--track:#ebe5d8}
+:root[data-style="neon"] body{background-image:radial-gradient(circle at 50% -5%,rgba(255,63,128,.24),transparent 38%),radial-gradient(circle at 95% 20%,rgba(67,220,255,.12),transparent 32%),linear-gradient(90deg,var(--grid) 1px,transparent 1px),linear-gradient(var(--grid) 1px,transparent 1px);background-size:100% 100%,100% 100%,32px 32px,32px 32px}
+:root[data-style="neon"] .top{border:1px solid rgba(67,220,255,.45);border-bottom:3px solid var(--red);background:linear-gradient(145deg,rgba(255,63,128,.16),rgba(67,220,255,.055) 60%,transparent);box-shadow:0 0 36px var(--gr),inset 0 0 24px rgba(67,220,255,.04)}
+:root[data-style="neon"] .top h1{text-shadow:0 0 20px var(--gr)}
+:root[data-style="neon"] .progress{box-shadow:0 0 26px var(--gb)}
+:root[data-style="neon"] .mission{box-shadow:0 10px 30px rgba(0,0,0,.18)}
+:root[data-style="neon"] .mission:hover,:root[data-style="neon"] .mission.complete{box-shadow:0 0 24px var(--gr)}
+:root[data-style="neon"] .badge{box-shadow:0 0 14px var(--gr)}
+:root[data-style="comic"] body{background-image:radial-gradient(circle,rgba(32,29,28,.09) 1px,transparent 1.3px),linear-gradient(180deg,#fffaf0,var(--bg));background-size:12px 12px,100% 100%}
+:root[data-style="comic"] .top{border:3px solid var(--text);border-bottom:5px solid var(--red);border-radius:9px;background:linear-gradient(135deg,#fffdf7,#ffe9bd);box-shadow:7px 7px 0 var(--text)}
+:root[data-style="comic"] .top h1{letter-spacing:.4px;text-shadow:2px 2px 0 rgba(220,48,70,.2)}
+:root[data-style="comic"] .progress{border:3px solid var(--text);border-radius:10px;box-shadow:6px 6px 0 var(--text);background:var(--card)}
+:root[data-style="comic"] .mission{border:2px solid var(--text);border-radius:9px;box-shadow:5px 5px 0 var(--text)}
+:root[data-style="comic"] .mission:hover,:root[data-style="comic"] .mission.complete{border-color:var(--red);box-shadow:5px 5px 0 var(--red)}
+:root[data-style="comic"] .mh{background:linear-gradient(90deg,rgba(22,123,192,.09),transparent)}
+:root[data-style="comic"] .badge{border:2px solid var(--text);border-radius:5px;background:#ffe16b;color:var(--text);letter-spacing:.4px}
+:root[data-style="comic"] .topic-box,:root[data-style="comic"] .course-box{border-color:var(--text);border-width:2px;border-radius:4px}
+:root[data-style="comic"] .style-option[aria-pressed="true"]{box-shadow:3px 3px 0 var(--text)}
+.style-picker{display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;margin-top:18px}
+.style-label{margin:0 3px 0 0;font-size:.76rem;font-weight:800;letter-spacing:.1em;color:var(--muted)}
+.style-option{padding:7px 13px;border:1px solid var(--line);border-radius:999px;background:var(--card);color:var(--text);font:inherit;font-size:.82rem;font-weight:700;cursor:pointer;transition:transform .18s,background .18s,color .18s,border-color .18s,box-shadow .18s}
+.style-option:hover{transform:translateY(-1px);border-color:var(--blue)}
+.style-option:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.style-option[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:var(--card);box-shadow:0 4px 14px var(--gb)}
+:root[data-style="comic"] .style-option[aria-pressed="true"]{color:#fff}
+@media(max-width:540px){.style-picker{gap:6px}.style-option{padding:7px 10px;font-size:.78rem}}
+
+:root[data-style="comic-night"]{color-scheme:dark;--red:#ff8996;--blue:#83c9b7;--bg:#07090f;--card:#101722;--line:#29374b;--text:#f1e9dc;--muted:#b9aa9c;--gold:#d9cbb0;--gr:rgba(255,137,150,.16);--gb:rgba(131,201,183,.16);--grid:rgba(255,241,225,.055);--track:#1a2533}
+:root[data-style="comic-night"] body{background-image:radial-gradient(circle,rgba(255,235,211,.13) 1px,transparent 1.3px),linear-gradient(150deg,#111a29,#05070b);background-size:12px 12px,100% 100%}
+:root[data-style="comic-night"] .top{border:3px solid #4a5e78;border-bottom:5px solid var(--red);border-radius:9px;background:linear-gradient(135deg,#182538,#101824);box-shadow:7px 7px 0 #080503}
+:root[data-style="comic-night"] .top h1{text-shadow:2px 2px 0 rgba(255,137,150,.24)}
+:root[data-style="comic-night"] .progress{border:3px solid #83c9b7;border-radius:10px;box-shadow:6px 6px 0 #080503;background:#101722}
+:root[data-style="comic-night"] .mission{border:2px solid #29374b;border-radius:9px;box-shadow:5px 5px 0 #080503}
+:root[data-style="comic-night"] .mission:hover,:root[data-style="comic-night"] .mission.complete{border-color:var(--red);box-shadow:5px 5px 0 #7a3030}
+:root[data-style="comic-night"] .mh{background:linear-gradient(90deg,rgba(131,201,183,.1),transparent)}
+:root[data-style="comic-night"] .badge{border:2px solid #83c9b7;border-radius:5px;background:#172334;color:#b9eadc;letter-spacing:.4px}
+:root[data-style="comic-night"] .topic-box,:root[data-style="comic-night"] .course-box{border-color:#83c9b7;border-width:2px;border-radius:4px}
+:root[data-style="comic-night"] .style-option[aria-pressed="true"]{color:#fff}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top">
+<h1>🕷️ Spider-Verse Data Engineering Roadmap 🕸️</h1>
+<p>Oct 2026 → Jul 2027 · 5 days a week · 3–4 h a day</p>
+<div class="style-picker" role="group" aria-label="Choose website style">
+<span class="style-label">STYLE</span>
+<button class="style-option" type="button" data-style-option="neon" aria-pressed="false">Neon City</button>
+<button class="style-option" type="button" data-style-option="comic" aria-pressed="false">Comic Panels</button>
+<button class="style-option" type="button" data-style-option="comic-night" aria-pressed="false">Comic Night</button>
+</div>
+</header>
+<section class="progress">
+<div class="ptop"><span>🕷️ Spider-Sense Sync</span><span><b id="pct">0%</b> · <span id="cnt">0 / 0 courses</span></span></div>
+<div class="track" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="bar"></div></div>
+<p id="quote"></p>
+<button class="reset" id="reset" type="button">Reset progress 🔄</button>
+</section>
+<p class="checklist-hint">Click a topic’s large box to toggle all its courses, or use the smaller boxes to track courses separately.</p>
+<main id="missions"></main>
+<footer>🕸️ Spider-Verse Data Engineering Tracker • Built for High Performance &amp; Pure Action ⚡</footer>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+const KEY="spiderverse-roadmap-v6";
+const LEGACY_KEY="spiderverse-roadmap-v5";
+const ce=(p,n,t,f)=>`Coursera → ${p} → Course ${n} of ${t}: ${f}`;
+const de=(n,f)=>ce("IBM Data Engineering",n,16,f);
+const da=(n,f)=>ce("IBM Data Analyst",n,11,f);
+const mt=(n,f)=>ce("Meta Database Engineer",n,9,f);
+const dk=(n,f)=>ce("Duke Python, Bash and SQL Essentials",n,4,f);
+const L=(...a)=>a.map((x,k)=>`${k+1}. ${x}`).join("<br>");
+const missions=[
+{t:"Python, Linux & Git",r:"Oct 1 – Nov 5",n:"Pace: 5 study days a week, 3–4 hours a day (about 17.5 hours a week). CS50P takes about 12 days at this pace: do every problem set and keep the final project for the last day. Already completed: IBM Data Engineering courses 1 and 2, and IBM Data Analyst course 4.",i:[
+["Python fundamentals","CS50P · DE 3",L("cs50.harvard.edu/python → Lectures 0–9 (functions, conditionals, loops, exceptions, libraries, unit tests, file I/O, regex, OOP, et cetera), then Problem Sets 0–9 and the final project.",de(3,"Python Project for Data Engineering (94% done, submit it today)")),"Oct 1–13 · ~31h"],
+["Python for data analysis","Udemy · Duke 1 · DA 5",L("Udemy: Python for Data Analysis and Data Science (about 6 hours): NumPy, Pandas and plotting.",dk(1,"Python and Pandas for Data Engineering (graded quizzes first)"),da(5,"Python Project for Data Science (fast-track)")),"Oct 14–23 · ~25h"],
+["Linux and Bash","Duke 2 · DE 6",L(dk(2,"Linux and Bash for Data Engineering: command line, scripts, cron, grep"),de(6,"Hands-on Introduction to Linux Commands and Shell Scripting (labs first)")),"Oct 24–30 · ~18h"],
+["Git and GitHub","Meta 2",L(mt(2,"Version Control: commits, branches, merges and pull requests")),"Oct 31 – Nov 5 · ~16h"]]},
+{t:"Relational Databases & SQL, Part 1",r:"Nov 6 – Dec 19",n:"Inside each topic, start with the course that teaches it best, then use the overlapping course as a fast-track: graded quizzes and labs first.",i:[
+["Database fundamentals and SQL","Meta 1, 3 · DE 4, 5 · DA 6",L(mt(1,"Introduction to Databases"),de(4,"Introduction to Relational Databases (RDBMS) (fast-track)"),mt(3,"Database Structures and Management with MySQL"),de(5,"Databases and SQL for Data Science with Python (fast-track). Same course as IBM Data Analyst course 6, so it counts once.")),"Nov 6 – Dec 4 · ~71h"],
+["Data modeling","Meta 7",L(mt(7,"Advanced Data Modeling: ER diagrams, normalization 1NF to 3NF and schemas")),"Dec 5–10 · ~15h"],
+["Advanced MySQL","Meta 4",L(mt(4,"Advanced MySQL Topics: stored procedures, indexes, transactions and views")),"Dec 11–19 · ~20h"]]},
+{t:"Exam Season",r:"Dec 20 – Jan 22",n:"Exam freeze (exams on Dec 27, 29, 30 and Jan 11, 14, 22): pause the Coursera programs and do 1–2 hours of freeCodeCamp a day, only when you are free.",i:[
+["Python v9 modules and labs","freeCodeCamp",L("freecodecamp.org/learn → Python v9 certification: lessons, workshops (such as Report Card Printer), labs and quizzes in order. Continue where you stopped."),"Dec 20 – Jan 22 · 1–2h/day"]]},
+{t:"Databases Part 2 & Python Depth",r:"Jan 23 – Mar 10",i:[
+["Python v9 projects and exam","freeCodeCamp",L("Same certification page: complete the 5 required projects, pass the exam and claim the certificate."),"Jan 23–27 · ~12h"],
+["Database administration","DE 7",L(de(7,"Relational Database Administration (DBA): backup, security and tuning for MySQL, PostgreSQL and Db2")),"Jan 28 – Feb 2 · ~15h"],
+["Python with databases","Meta 5, 6 · Duke 3",L(mt(5,"Programming in Python (quizzes first)"),mt(6,"Database Clients: connect Python to MySQL"),dk(3,"Scripting with Python and SQL for Data Engineering")),"Feb 3–19 · ~41h"],
+["Database capstone and interviews","Meta 8, 9",L(mt(8,"Database Engineer Capstone: publish it on GitHub"),mt(9,"Coding Interview Preparation: final course, then the Meta certificate")),"Feb 20 – Mar 3 · ~30h"],
+["Web apps and command-line tools","Duke 4",L(dk(4,"Web Applications and Command-Line Tools for Data Engineering: build a web app and a CLI tool, then the Duke certificate")),"Mar 4–10 · ~18h"]]},
+{t:"Pipelines, Warehousing & BI",r:"Mar 11 – Apr 22",i:[
+["ETL and data pipelines","DE 8",L(de(8,"ETL and Data Pipelines with Shell, Airflow and Kafka: Bash ETL, Airflow DAGs and Kafka streaming labs")),"Mar 11–22 · ~30h"],
+["Data warehousing","DE 9",L(de(9,"Data Warehouse Fundamentals: star and snowflake schemas, data marts, materialized views, CUBE and ROLLUP")),"Mar 23–29 · ~16h"],
+["BI, dashboards and analytics basics","DA 1, 2, 3 · DE 10",L(da(1,"Introduction to Data Analytics"),da(2,"Excel Basics for Data Analysis"),da(3,"Data Visualization and Dashboards with Excel and Cognos"),de(10,"BI Dashboards with IBM Cognos Analytics and Google Looker (build them on top of your warehouse)")),"Mar 30 – Apr 22 · ~61h"]]},
+{t:"NoSQL, Big Data & Data Analysis",r:"Apr 23 – Jun 23",n:"The IBM Data Engineering certificate lands after course 16 and the Data Analyst certificate after course 11. If second-term exams fall in this window, pause and shift the dates.",i:[
+["NoSQL databases","DE 11",L(de(11,"Introduction to NoSQL Databases: MongoDB and Cassandra hands-on labs")),"Apr 23–28 · ~15h"],
+["Big data with Spark and Hadoop","DE 12, 13",L(de(12,"Introduction to Big Data with Spark and Hadoop: HDFS, Hive and PySpark"),de(13,"Machine Learning with Apache Spark: SparkML and streaming labs")),"Apr 29 – May 14 · ~40h"],
+["Data analysis and visualization with Python","DA 7, 8",L(da(7,"Data Analysis with Python: Pandas, NumPy and EDA"),da(8,"Data Visualization with Python: Matplotlib, Seaborn and dashboards")),"May 15–30 · ~38h"],
+["Course capstones","DE 14 · DA 9",L(de(14,"Data Engineering Capstone Project: publish it on GitHub"),da(9,"IBM Data Analyst Capstone Project: publish the report")),"May 31 – Jun 15 · ~40h"],
+["GenAI and career prep","DE 15, 16 · DA 10, 11",L(de(15,"Generative AI: Elevate Your Data Engineering Career"),de(16,"Data Engineering Career Guide and Interview Preparation"),da(10,"Generative AI: Enhance Your Data Analytics Career"),da(11,"Data Analyst Career Guide and Interview Preparation (final course)")),"Jun 16–23 · ~20h"]]},
+{t:"Final Capstone: Become the Data Engineer",r:"Jun 24 – Jul 27",n:"Not covered by the courses: dbt, a cloud warehouse (BigQuery or Snowflake), Docker and cloud basics. Add them here.",i:[
+["Build the pipeline","Portfolio","Ingest a real API or dataset with Python, orchestrate it with Airflow, load a star schema in PostgreSQL or MySQL, and package it with Docker.","Jun 24 – Jul 9 · ~40h"],
+["Model and present","Portfolio","Add dbt or SQL views, load into BigQuery, build a dashboard, and write a README with an architecture diagram.","Jul 10–21 · ~30h"],
+["Job-ready package","Portfolio","Polish GitHub, CV and LinkedIn, list all certificates, and practise SQL and Python interview questions.","Jul 22–27 · ~15h"]]}
+];
+const quotes=[
+"Your Spider-Sense is tingling... time to swing into Data Engineering! 🕷️",
+"First strand of web is up. Keep swinging! 🕸️",
+"Two down. Your Spider-Sense is getting sharper! ⚡",
+"Three tasks in. Even Peter Parker started small! 💻",
+"Four checks! The city's data is getting safer. 🏙️",
+"Five down. You're swinging with confidence now! 🚀",
+"Six! Miles took a leap of faith, and so are you. 🕷️",
+"Seven tasks cleared. Your web of skills keeps growing! 🕸️",
+"Eight! Your pipelines flow smoother than a web-shot. 🔥",
+"Nine down. No villain can stop this momentum! 💥",
+"Ten! Double digits, web-slinger! 🎉",
+"Eleven tasks. Great power, great pipelines! ⚡",
+"Twelve! Halfway across the Data-Verse. 🌌",
+"Thirteen. Lucky number for a hero on a roll! 🕷️",
+"Fourteen down. Spider-Sense at full tingle! 🔔",
+"Fifteen! The skyline looks different from up here. 🌆",
+"Sixteen tasks. Your suit is looking sharp! 🧵",
+"Seventeen! Villains of bad data, beware. 🦹",
+"Eighteen down. A true friendly neighborhood engineer! 🏘️",
+"Nineteen! The finish line is in web range. 🎯",
+"Twenty! Only a few swings left. 🏆",
+"Twenty-one. Miles would be proud of you. 💪",
+"Twenty-two. One more leap and it's done! 🕸️",
+"Twenty-three. The final swing is waiting! 👑",
+"MISSION COMPLETE! Certified Data Engineer Web-Slinger! 🕷️👑"
+];
+const cheers=[
+"Thwip! Another web strand anchored. Keep swinging! 🕸️",
+"Your Spider-Sense says you're on the right track! 🕷️",
+"Even Peter Parker started with one small web. Nice work!",
+"Miles took his leap of faith, and so did you! 🚀",
+"That's how a friendly neighborhood engineer does it!",
+"Mask on, pipeline up. Another villain defeated! 💥",
+"Swinging higher than yesterday, web-slinger!",
+"Anyone can wear the mask, and you're earning it! 🕷️",
+"Hero move! The city's data is safer tonight.",
+"Great power, great pipelines. Keep going, hero!",
+"Spider-Verse level up unlocked! ⚡",
+"Nothing stops a hero who shows up every day! 🕸️"
+];
+const clears=[
+"MISSION 1 CLEARED! Web-slinging basics unlocked. The city is yours! 🕷️",
+"MISSION 2 CLEARED! The first half of the database web is spun! 🕸️",
+"MISSION 3 CLEARED! Exam season survived like a true hero! ⚡",
+"MISSION 4 CLEARED! Databases and Python mastered. Miles would be proud! 🚀",
+"MISSION 5 CLEARED! Pipelines, warehouses and dashboards: all swinging! 🔥",
+"MISSION 6 CLEARED! Big data conquered. Spider-Sense at max! 💥",
+"FINAL MISSION CLEARED! You are a Data Engineer, Spider-Verse certified! 👑🕷️"
+];
+const $=id=>document.getElementById(id);
+let courseN=0,taskN=0,cheer=0,timer=0,armed=0;const PRE=[],taskCourses=[];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function courseSteps(raw){
+const lines=String(raw).split("<br>").map(x=>x.replace(/^\d+\.\s*/,"").trim()).filter(Boolean);
+return lines.flatMap(line=>{
+const shared=line.match(/^(Coursera → IBM Data Engineering → Course 5 of 16:)(.*?)\. Same course as IBM Data Analyst course 6, so it counts once\.$/);
+if(!shared)return[line];
+const title=shared[2].replace(/\s*\(fast-track\)\s*$/,"");
+return[`${shared[1]} ${title} (fast-track)`,`Coursera → IBM Data Analyst → Course 6 of 11: ${title} (same course content, tracked as its own checklist entry)`];
+});
+}
+function courseMarkup(step,taskId,prechecked){
+const id=courseN++,parts=step.match(/^(.+?Course \d+ of \d+:)\s*(.*)$/),reference=parts?parts[1]:"",description=parts?parts[2]:step;
+taskCourses[taskId].push(id);if(prechecked)PRE.push(id);
+return `<li class="course-item"><label class="course-label"><input class="course-toggle" type="checkbox" value="${id}"><span class="box course-box"></span><span class="course-copy">${reference?`<small class="course-ref">${esc(reference)}</small>`:""}<strong>${esc(description)}</strong></span></label></li>`;
+}
+$("missions").innerHTML=missions.map((m,k)=>`<section class="mission"><div class="mh"><span class="badge">MISSION 0${k+1}</span><h2>${esc(m.t)}</h2><span class="range">${esc(m.r)}</span><span class="count"></span></div><ul>${m.i.map(([t,s,w,d,x])=>{const taskId=taskN++;taskCourses[taskId]=[];const courses=courseSteps(w);return `<li class="topic"><label class="topic-label"><input class="task-toggle" type="checkbox" value="${taskId}" aria-label="Mark all courses in ${esc(t)} complete"><span class="box topic-box"></span><span class="topic-copy"><span class="row"><b class="topic-title">${esc(t)}</b><i>${esc(s)}</i><i class="date">${esc(d)}</i></span></span></label><ul class="courses">${courses.map(step=>courseMarkup(step,taskId,x)).join("")}</ul></li>`}).join("")}</ul>${m.n?`<p class="note">${esc(m.n)}</p>`:""}</section>`).join("");
+const boxes=[...document.querySelectorAll(".course-toggle")],parents=[...document.querySelectorAll(".task-toggle")],sections=[...document.querySelectorAll(".mission")];
+const reset=$("reset"),label=reset.textContent;
+function getSaved(){
+try{const current=JSON.parse(localStorage.getItem(KEY));if(Array.isArray(current))return current.map(Number);const old=JSON.parse(localStorage.getItem(LEGACY_KEY));if(Array.isArray(old))return old.flatMap(id=>taskCourses[Number(id)]||[])}catch(e){}
+return PRE;
+}
+const saved=new Set(getSaved());
+boxes.forEach(b=>{b.checked=saved.has(+b.value)});
+function children(parent){return [...parent.closest(".topic").querySelectorAll(".course-toggle")];}
+function syncParents(){parents.forEach(parent=>{const kids=children(parent),done=kids.filter(x=>x.checked).length;parent.checked=kids.length>0&&done===kids.length;parent.indeterminate=done>0&&done<kids.length;parent.setAttribute("aria-checked",parent.indeterminate?"mixed":String(parent.checked));parent.closest(".topic").classList.toggle("is-complete",parent.checked)});}
+function complete(section){const list=[...section.querySelectorAll(".course-toggle")];return list.length>0&&list.every(x=>x.checked)}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(boxes.filter(b=>b.checked).map(b=>+b.value)))}catch(e){}}
+function say(t){$("toast").textContent=t;$("toast").classList.add("show");clearTimeout(timer);timer=setTimeout(()=>$("toast").classList.remove("show"),4200)}
+function render(){
+const c=boxes.filter(b=>b.checked).length,p=boxes.length?Math.round(c/boxes.length*100):0;
+$("bar").style.width=p+"%";$("bar").parentElement.setAttribute("aria-valuenow",p);$("pct").textContent=p+"%";$("cnt").textContent=c+" / "+boxes.length+" courses";
+const quoteIndex=Math.round((boxes.length?c/boxes.length:0)*(quotes.length-1));$("quote").textContent=quotes[quoteIndex];
+boxes.forEach(b=>b.closest(".course-item").classList.toggle("done",b.checked));
+sections.forEach(s=>{const b=[...s.querySelectorAll(".course-toggle")];s.querySelector(".count").textContent=b.filter(x=>x.checked).length+" / "+b.length+" courses";s.classList.toggle("complete",complete(s))});
+}
+function disarm(){clearTimeout(armed);armed=0;reset.textContent=label}
+syncParents();render();
+boxes.forEach(b=>b.addEventListener("change",()=>{const s=b.closest(".mission"),k=sections.indexOf(s),was=complete(s);save();syncParents();render();if(!b.checked)return;say(complete(s)&&!was?clears[k]:cheers[cheer++%cheers.length])}));
+parents.forEach(parent=>parent.addEventListener("change",()=>{const s=parent.closest(".mission"),k=sections.indexOf(s),was=complete(s);children(parent).forEach(b=>{b.checked=parent.checked});save();syncParents();render();if(!parent.checked)return;say(complete(s)&&!was?clears[k]:cheers[cheer++%cheers.length])}));
+reset.addEventListener("click",()=>{if(!armed){reset.textContent="Click again to confirm";armed=setTimeout(disarm,3000);return}boxes.forEach(b=>{b.checked=false});save();syncParents();render();disarm()});
+
+const STYLE_KEY="spiderverse-roadmap-style",styleOptions=[...document.querySelectorAll(".style-option")],validStyles=["neon","comic","comic-night"];
+function setStyle(style,persist=true){const next=validStyles.includes(style)?style:"neon";document.documentElement.dataset.style=next;styleOptions.forEach(button=>{const active=button.dataset.styleOption===next;button.setAttribute("aria-pressed",String(active))});if(persist){try{localStorage.setItem(STYLE_KEY,next)}catch(e){}}}
+let initialStyle="neon";try{initialStyle=localStorage.getItem(STYLE_KEY)||"neon"}catch(e){}
+setStyle(initialStyle,false);styleOptions.forEach(button=>button.addEventListener("click",()=>setStyle(button.dataset.styleOption)));
+
+</script>
+<script>if("serviceWorker"in navigator)addEventListener("load",()=>navigator.serviceWorker.register("sw.js").catch(()=>{}))</script>
+</body>
+</html>
