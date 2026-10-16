@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-style="neon">
 <head>
 <meta charset="UTF-8">
+<script>try{var s=localStorage.getItem("spiderverse-roadmap-style");if(["neon","comic","comic-night"].indexOf(s)<0)s="neon";document.documentElement.setAttribute("data-style",s)}catch(e){}</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
 <title>Spider-Verse Career Vision</title>
@@ -11,6 +12,18 @@
 :root{--red:#d6004a;--blue:#0077a8;--bg:#f3f5fa;--card:#fff;--line:#d9e0ec;--text:#0f172a;--muted:#52607a;--gold:#8a5a00;--gr:rgba(214,0,74,.16);--gb:rgba(0,119,168,.16);--grid:rgba(15,23,42,.05);--track:#e2e8f0;--display:"Tajawal","IBM Plex Sans Arabic",system-ui,sans-serif;--body:"IBM Plex Sans Arabic","Segoe UI",system-ui,sans-serif;box-sizing:border-box}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--red:#ff4d88;--blue:#38d6ff;--bg:#0a0d14;--card:#121824;--line:#1e293b;--text:#f8fafc;--muted:#94a3b8;--gold:#ffcc00;--gr:rgba(255,0,85,.28);--gb:rgba(0,210,255,.22);--grid:rgba(255,255,255,.04);--track:#1e293b;color-scheme:dark}}
 :root[data-theme="dark"]{--red:#ff4d88;--blue:#38d6ff;--bg:#0a0d14;--card:#121824;--line:#1e293b;--text:#f8fafc;--muted:#94a3b8;--gold:#ffcc00;--gr:rgba(255,0,85,.28);--gb:rgba(0,210,255,.22);--grid:rgba(255,255,255,.04);--track:#1e293b;color-scheme:dark}
+:root[data-style="neon"]{color-scheme:dark;--red:#ff3f80;--blue:#43dcff;--bg:#080b15;--card:#10172a;--line:#273553;--text:#f4f7ff;--muted:#9daec9;--gold:#ffe27a;--gr:rgba(255,45,120,.2);--gb:rgba(67,220,255,.17);--grid:rgba(255,255,255,.045);--track:#1a2540}
+:root[data-style="comic"]{color-scheme:light;--red:#dc3046;--blue:#167bc0;--bg:#fff7e7;--card:#fffdf7;--line:#272323;--text:#211e1c;--muted:#625c57;--gold:#a45500;--gr:rgba(220,48,70,.11);--gb:rgba(22,123,192,.13);--grid:rgba(20,20,20,.045);--track:#ebe5d8}
+:root[data-style="comic-night"]{color-scheme:dark;--red:#ff8996;--blue:#83c9b7;--bg:#07090f;--card:#101722;--line:#29374b;--text:#f1e9dc;--muted:#b9aa9c;--gold:#d9cbb0;--gr:rgba(255,137,150,.16);--gb:rgba(131,201,183,.16);--grid:rgba(255,241,225,.055);--track:#1a2533}
+:root[data-style="neon"] body{background-image:radial-gradient(circle at 50% -5%,rgba(255,63,128,.24),transparent 38%),radial-gradient(circle at 95% 20%,rgba(67,220,255,.12),transparent 32%),linear-gradient(90deg,var(--grid) 1px,transparent 1px),linear-gradient(var(--grid) 1px,transparent 1px);background-size:100% 100%,100% 100%,32px 32px,32px 32px}
+:root[data-style="comic"] body{background-image:radial-gradient(circle,rgba(32,29,28,.09) 1px,transparent 1.3px),linear-gradient(180deg,#fffaf0,var(--bg));background-size:12px 12px,100% 100%}
+:root[data-style="comic-night"] body{background-image:radial-gradient(circle,rgba(255,235,211,.13) 1px,transparent 1.3px),linear-gradient(150deg,#111a29,#05070b);background-size:12px 12px,100% 100%}
+:root[data-style="comic"] .top{border:3px solid var(--text);border-bottom:5px solid var(--red);border-radius:9px;background:linear-gradient(135deg,#fffdf7,#ffe9bd);box-shadow:7px 7px 0 var(--text)}
+:root[data-style="comic-night"] .top{border:3px solid #4a5e78;border-bottom:5px solid var(--red);border-radius:9px;background:linear-gradient(135deg,#182538,#101824);box-shadow:7px 7px 0 #080503}
+:root[data-style="comic"] .st,:root[data-style="comic"] .card,:root[data-style="comic"] .lead,:root[data-style="comic"] .warn,:root[data-style="comic"] .qs li{border-color:var(--text);border-radius:9px;box-shadow:4px 4px 0 var(--text)}
+:root[data-style="comic-night"] .st,:root[data-style="comic-night"] .card,:root[data-style="comic-night"] .lead,:root[data-style="comic-night"] .warn,:root[data-style="comic-night"] .qs li{border-radius:9px;box-shadow:4px 4px 0 #080503}
+:root[data-style="comic"] .st:hover,:root[data-style="comic"] .st.now,:root[data-style="comic"] .card.pick{border-color:var(--red);box-shadow:4px 4px 0 var(--red)}
+:root[data-style="comic-night"] .st:hover,:root[data-style="comic-night"] .st.now,:root[data-style="comic-night"] .card.pick{border-color:var(--red);box-shadow:4px 4px 0 #7a3030}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--body);line-height:1.75;color:var(--text);background-color:var(--bg);background-image:radial-gradient(circle at 50% 0,var(--gr),transparent 60%),linear-gradient(90deg,var(--grid) 1px,transparent 1px),linear-gradient(var(--grid) 1px,transparent 1px);background-size:100% 100%,30px 30px,30px 30px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-top:calc(20px + env(safe-area-inset-top,0px));padding-bottom:calc(20px + env(safe-area-inset-bottom,0px))}
 .wrap{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:28px}

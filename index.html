@@ -23,6 +23,9 @@ body{font-family:system-ui,"Segoe UI",Roboto,sans-serif;line-height:1.55;padding
 .top{text-align:center;padding:28px 20px;margin-bottom:28px;border-radius:16px;border-bottom:3px solid var(--red);background:linear-gradient(180deg,var(--gr),transparent);box-shadow:0 0 25px var(--gr)}
 .top h1{font-size:clamp(1.25rem,4.5vw,2rem);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
 .top p{color:var(--blue);font-weight:600}
+.career{display:inline-block;margin-top:14px;padding:6px 18px;border:1px solid var(--red);border-radius:8px;color:var(--red);font-weight:700;font-size:.9rem;text-decoration:none;transition:background .2s,color .2s}
+.career:hover,.career:focus-visible{background:var(--red);color:var(--card)}
+.career:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
 .progress{background:var(--card);border:2px solid var(--blue);border-radius:16px;padding:20px;margin-bottom:28px;box-shadow:0 0 15px var(--gb)}
 .ptop{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 12px;margin-bottom:12px;font-weight:700}
 .track{height:22px;border-radius:11px;overflow:hidden;background:var(--track);border:1px solid var(--line)}
@@ -124,6 +127,7 @@ footer{text-align:center;padding:20px;font-size:.9rem;color:var(--muted)}
 <header class="top">
 <h1>🕷️ Spider-Verse Data Engineering Roadmap 🕸️</h1>
 <p>Oct 2026 → Jul 2027 · 5 days a week · 3–4 h a day</p>
+<a class="career" href="career.html">🕸️ Career Vision →</a>
 <div class="style-picker" role="group" aria-label="Choose website style">
 <span class="style-label">STYLE</span>
 <button class="style-option" type="button" data-style-option="neon" aria-pressed="false">Neon City</button>
