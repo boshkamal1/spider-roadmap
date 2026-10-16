@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Spider-Verse Career Vision</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Tajawal:wght@700;800&display=swap">
+<style>
+/* Layout: one vertical timeline of six stages, then branches, skill shape and checkpoints. Same Spider-Verse tokens as the roadmap page. */
+:root{--red:#d6004a;--blue:#0077a8;--bg:#f3f5fa;--card:#fff;--line:#d9e0ec;--text:#0f172a;--muted:#52607a;--gold:#8a5a00;--gr:rgba(214,0,74,.16);--gb:rgba(0,119,168,.16);--grid:rgba(15,23,42,.05);--track:#e2e8f0;--display:"Tajawal","IBM Plex Sans Arabic",system-ui,sans-serif;--body:"IBM Plex Sans Arabic","Segoe UI",system-ui,sans-serif;box-sizing:border-box}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--red:#ff4d88;--blue:#38d6ff;--bg:#0a0d14;--card:#121824;--line:#1e293b;--text:#f8fafc;--muted:#94a3b8;--gold:#ffcc00;--gr:rgba(255,0,85,.28);--gb:rgba(0,210,255,.22);--grid:rgba(255,255,255,.04);--track:#1e293b;color-scheme:dark}}
+:root[data-theme="dark"]{--red:#ff4d88;--blue:#38d6ff;--bg:#0a0d14;--card:#121824;--line:#1e293b;--text:#f8fafc;--muted:#94a3b8;--gold:#ffcc00;--gr:rgba(255,0,85,.28);--gb:rgba(0,210,255,.22);--grid:rgba(255,255,255,.04);--track:#1e293b;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--body);line-height:1.75;color:var(--text);background-color:var(--bg);background-image:radial-gradient(circle at 50% 0,var(--gr),transparent 60%),linear-gradient(90deg,var(--grid) 1px,transparent 1px),linear-gradient(var(--grid) 1px,transparent 1px);background-size:100% 100%,30px 30px,30px 30px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-top:calc(20px + env(safe-area-inset-top,0px));padding-bottom:calc(20px + env(safe-area-inset-bottom,0px))}
+.wrap{max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:28px}
+a{color:var(--blue)}
+a:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:6px}
+.nav{align-self:flex-start;display:inline-block;padding:6px 16px;border:1px solid var(--blue);border-radius:8px;text-decoration:none;font-weight:600;font-size:.9rem;transition:background .2s,color .2s}
+.nav:hover{background:var(--blue);color:var(--card)}
+.top{text-align:center;padding:28px 20px;border-radius:16px;border-bottom:3px solid var(--red);background:linear-gradient(180deg,var(--gr),transparent);box-shadow:0 0 25px var(--gr)}
+.top h1{font-family:var(--display);font-weight:800;font-size:clamp(1.5rem,5.5vw,2.3rem);line-height:1.3;text-wrap:balance;margin-bottom:8px}
+.top p{color:var(--blue);font-weight:600;text-wrap:balance}
+.lead{background:var(--card);border:2px solid var(--blue);border-radius:16px;padding:18px 20px;box-shadow:0 0 15px var(--gb);color:var(--muted)}
+.lead strong{color:var(--text)}
+h2{font-family:var(--display);font-weight:800;font-size:1.35rem;color:var(--blue);text-wrap:balance}
+.sec{display:flex;flex-direction:column;gap:14px}
+.sec>p{color:var(--muted)}
+.tl{list-style:none;position:relative;display:flex;flex-direction:column;gap:20px;padding-inline-start:34px}
+.tl::before{content:"";position:absolute;inset-block:8px;inset-inline-start:11px;width:3px;border-radius:2px;background:linear-gradient(180deg,var(--blue),var(--red))}
+.st{position:relative;background:var(--card);border:2px solid var(--line);border-radius:16px;overflow:hidden;transition:border-color .3s,box-shadow .3s}
+.st::before{content:"";position:absolute;inset-inline-start:-31px;top:20px;width:17px;height:17px;border-radius:50%;background:var(--card);border:3px solid var(--blue)}
+.st:hover,.st.now{border-color:var(--red);box-shadow:0 0 20px var(--gr)}
+.st.now::before{background:var(--red);border-color:var(--red);box-shadow:0 0 0 5px var(--gr)}
+.sh{display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;padding:14px 18px;background:var(--grid);border-bottom:1px solid var(--line)}
+.badge{padding:2px 12px;border-radius:20px;border:1px solid var(--red);background:var(--gr);color:var(--red);font-size:.78rem;font-weight:600}
+.sh h3{flex:1;min-width:150px;font-family:var(--display);font-weight:800;font-size:1.1rem;color:var(--blue)}
+.when{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.here{display:none;padding:0 10px;border-radius:12px;background:var(--red);color:var(--card);font-size:.78rem;font-weight:600}
+.st.now .here{display:inline-block}
+.sb{padding:12px 18px 16px;display:flex;flex-direction:column;gap:8px}
+.sb ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.sb li{position:relative;padding-inline-start:20px}
+.sb li::before{content:"";position:absolute;inset-inline-start:2px;top:.8em;width:8px;height:8px;border-radius:2px;background:var(--blue)}
+.out{margin-top:2px;padding:8px 14px;border-radius:10px;background:var(--grid);border-inline-start:3px solid var(--red);font-size:.9rem;color:var(--muted)}
+.out strong{color:var(--text)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px}
+.card{min-width:0;background:var(--card);border:2px solid var(--line);border-radius:16px;padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.card h3{font-family:var(--display);font-weight:800;font-size:1.05rem;color:var(--blue)}
+.card p{color:var(--muted);font-size:.95rem}
+.card.pick{border-color:var(--red);box-shadow:0 0 20px var(--gr)}
+.tag{align-self:flex-start;padding:0 10px;border-radius:12px;background:var(--red);color:var(--card);font-size:.78rem;font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:3px 14px;border-radius:20px;border:1px solid var(--blue);color:var(--blue);font-size:.88rem;font-weight:500}
+.chip.deep{background:var(--blue);color:var(--card)}
+.chip.deep.two{background:var(--red);border-color:var(--red)}
+.chip.hobby{border-style:dashed;color:var(--muted);border-color:var(--line)}
+.legend{font-size:.88rem;color:var(--muted)}
+.qs{counter-reset:q;list-style:none;display:flex;flex-direction:column;gap:10px}
+.qs li{counter-increment:q;display:flex;gap:12px;align-items:flex-start;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px}
+.qs li::before{content:counter(q);flex:none;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--gr);color:var(--red);font-weight:600;font-variant-numeric:tabular-nums}
+.warn{background:var(--card);border:2px solid var(--line);border-inline-start:5px solid var(--gold);border-radius:12px;padding:14px 18px;display:flex;flex-direction:column;gap:8px}
+.warn li{margin-inline-start:18px}
+.warn strong{color:var(--text)}
+footer{text-align:center;padding:10px;font-size:.88rem;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="nav" href="index.html">← الرودماب</a>
+<header class="top">
+<h1>تصوّر المسار الوظيفي</h1>
+<p>من أكتوبر 2026 لحد ما تبقى Data / ML Engineer</p>
+</header>
+<p class="lead"><strong>التواريخ لحد يوليو 2027 مأخوذة من الرودماب نفسها.</strong> اللي بعدها تقديرات مبنية على إنك في سنة تالتة وفاضلك سنتين، فاعتبرها اتجاه مش جدول ملزم، وعدّلها كل 3 شهور.</p>
+
+<section class="sec">
+<h2>الرحلة مرحلة بمرحلة</h2>
+<ol class="tl" id="tl">
+<li class="st" data-from="2026-10-01" data-to="2027-01-22">
+<div class="sh"><span class="badge">المرحلة 1</span><h3>تأسيس</h3><span class="when">أكتوبر 2026 – يناير 2027</span><span class="here">أنت هنا</span></div>
+<div class="sb"><ul>
+<li>Python (CS50P) وLinux وGit، وبعدها SQL وقواعد البيانات العلائقية ونمذجة البيانات.</li>
+<li>فترة الامتحانات من 27 ديسمبر لـ 22 يناير: الكلية الأولوية، وساعة أو اتنين freeCodeCamp لما تكون فاضي.</li>
+</ul>
+<p class="out"><strong>الناتج اللي يتشاف:</strong> ريبو GitHub فيه أول 3 مشاريع صغيرة، وكورس يتعدّ "خلّصته" لما يطلع منه مشروع وملخص صفحة.</p></div>
+</li>
+<li class="st" data-from="2027-01-23" data-to="2027-07-27">
+<div class="sh"><span class="badge">المرحلة 2</span><h3>بناء الأساس التقني</h3><span class="when">فبراير – يوليو 2027</span><span class="here">أنت هنا</span></div>
+<div class="sb"><ul>
+<li>Meta Database Engineer وDBA وPython مع قواعد البيانات، ثم ETL وAirflow وKafka وData Warehouse وNoSQL وSpark.</li>
+<li>من <strong>مارس 2027</strong> ابدأ التقديم على تدريب صيفي: الـ CV والـ GitHub لازم يكونوا جاهزين قبلها.</li>
+<li>مشروع Climate Decision يبقى واجهة الـ CV: README قوي ورسمة معمارية.</li>
+</ul>
+<p class="out"><strong>الناتج اللي يتشاف:</strong> الكابستون النهائي (Airflow + star schema + Docker + dashboard) اللي مجدول يخلص 27 يوليو. لو التدريب بدأ قبلها، اعمل الكابستون بجرعة أخف بالتوازي.</p></div>
+</li>
+<li class="st" data-from="2027-06-01" data-to="2027-09-30">
+<div class="sh"><span class="badge">المرحلة 3</span><h3>التدريب الأول</h3><span class="when">صيف 2027 (تقدير)</span><span class="here">أنت هنا</span></div>
+<div class="sb"><ul>
+<li>أي تدريب قريب من الداتا: Data Engineering أو BI أو Analytics. الأهم تشوف شغل حقيقي وفريق حقيقي.</li>
+<li>لو فيه اختيار، فضّل اللي فيه pipelines وقواعد بيانات على اللي فيه Excel بس.</li>
+</ul>
+<p class="out"><strong>الناتج اللي يتشاف:</strong> خبرة تتكتب في الـ CV، وشخص يزكّيك.</p></div>
+</li>
+<li class="st" data-from="2027-10-01" data-to="2028-06-30">
+<div class="sh"><span class="badge">المرحلة 4</span><h3>تخصص وشهادات</h3><span class="when">سنة رابعة 2027/2028 (تقدير)</span><span class="here">أنت هنا</span></div>
+<div class="sb"><ul>
+<li>شهادة Databricks (Data Engineer) وشهادة Cloud، AWS أو Azure والاختيار لسه مفتوح.</li>
+<li>تدريب تاني أو شغل part-time مرتبط بالـ DE، بشرط ما يضربش الدراسة.</li>
+<li>ML يندمج في شغلك: Climate Decision فيه XGBoost أصلًا، فكمّل عليه نشر الموديل ومراقبته (MLOps).</li>
+</ul>
+<p class="out"><strong>الناتج اللي يتشاف:</strong> شهادتين، مشروع تخرج مصقول، وتجربتين شغل.</p></div>
+</li>
+<li class="st" data-from="2028-07-01" data-to="2029-06-30">
+<div class="sh"><span class="badge">المرحلة 5</span><h3>التخرج وأول وظيفة</h3><span class="when">حوالي 2028 (تقدير)</span><span class="here">أنت هنا</span></div>
+<div class="sb"><ul>
+<li>الهدف: Junior Data Engineer أو Analytics Engineer.</li>
+<li>مكان الشغل (شركة، ستارت أب، remote) قرار لسه مأجل، وده سليم. بس ابدأ تجمع معلومات عنه في سنة رابعة.</li>
+</ul></div>
+</li>
+<li class="st" data-from="2029-07-01" data-to="2032-12-31">
+<div class="sh"><span class="badge">المرحلة 6</span><h3>بعد 1 – 3 سنين من الشغل</h3><span class="when">بعد التخرج</span><span class="here">أنت هنا</span></div>
+<div class="sb"><ul>
+<li>تبقى Data Engineer متوسط، وتختار تعمّق في اتجاه من التلاتة تحت.</li>
+</ul></div>
+</li>
+</ol>
+</section>
+
+<section class="sec">
+<h2>التفرّع بعد أول سنين شغل</h2>
+<div class="grid">
+<article class="card"><h3>Senior DE / Data Platform</h3><p>عمق في البنية: orchestration وwarehouses وlakehouse والأداء والتكلفة. مناسب لو بتحب تبني الأساس اللي الناس كلها بتمشي عليه.</p></article>
+<article class="card pick"><span class="tag">الأقرب حاليًا</span><h3>ML Engineer / MLOps</h3><p>pipelines للموديلات ونشرها ومراقبتها. بيجمع الـ DE اللي هو مسارك الأساسي مع الـ ML اللي قلت إنه مكمّل ليه.</p></article>
+<article class="card"><h3>Data / Tech Lead</h3><p>قيادة فريق داتا. مناسب لو كملت تحب تقود، وتقود في المنطقة اللي إنت متعمق فيها.</p></article>
+</div>
+</section>
+
+<section class="sec">
+<h2>شكل المهارات (T-Shape)</h2>
+<div class="chips" aria-label="مهارات العمق">
+<span class="chip deep">عمق 1: Data Engineering</span>
+<span class="chip deep two">عمق 2: Machine Learning</span>
+</div>
+<div class="chips" aria-label="مهارات الأفق">
+<span class="chip">Python وSQL</span>
+<span class="chip">Cloud</span>
+<span class="chip">Spark وAirflow</span>
+<span class="chip">Databricks</span>
+<span class="chip hobby">Flutter (هواية)</span>
+</div>
+<p class="legend">الملوّن عمق، والمفرّغ أفق واسع تعرف منه كفاية، والمنقّط هواية تفضل جنب المسار.</p>
+</section>
+
+<section class="sec">
+<h2>مراجعة كل 3 شهور</h2>
+<p>عشان ما يجيش وقت وتندم، وعشان الهدف ما يتوهش وسط الشغل، اقعد كل 3 شهور 20 دقيقة وجاوب:</p>
+<ol class="qs">
+<li>إيه اللي خلّصته وطلع منه ناتج أقدر أوريه لحد؟</li>
+<li>إيه اللي بدأته وسبته، وهل لسه محتاجه ولا أشيله من الخطة؟</li>
+<li>هل التدريب أو الشغل اللي قدامي لسه في اتجاه الـ DE والـ ML؟</li>
+<li>لو مفيش قرار لازم يتاخد دلوقتي، إيه أرخص تجربة أعرف بيها أكتر؟</li>
+</ol>
+</section>
+
+<section class="sec">
+<h2>ثلاث حاجات تحمي الخطة</h2>
+<div class="warn">
+<ul>
+<li><strong>مشاريع قبل شهادات.</strong> الشهادات كتير ومتداخلة في الـ SQL والـ Python، فعدّي المكرر بسرعة وركّز على اللي بيطلع منه مشروع.</li>
+<li><strong>الكلية مش عدو.</strong> التقدير بيفرق في التدريب وأول وظيفة، وساعات الرودماب (3–4 يوميًا) ممكن تتعدّل بعد أول شهر لو الواقع مختلف.</li>
+<li><strong>ناتج أسبوعي يتشاف.</strong> كل أسبوع حاجة صغيرة تشتغل أو تتنشر، لأن النتايج المبكرة هي اللي بتخليك مكمّل.</li>
+</ul>
+</div>
+</section>
+<footer>🕸️ Spider-Verse Career Vision • اتجاه مش قيد</footer>
+</div>
+<script>
+(function(){
+var now=new Date(),any=false;
+document.querySelectorAll("#tl .st").forEach(function(s){
+var a=new Date(s.dataset.from),b=new Date(s.dataset.to);
+if(now>=a&&now<=b&&!any){s.classList.add("now");any=true}
+});
+})();
+</script>
+</body>
+</html>
