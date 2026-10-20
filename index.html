@@ -63,6 +63,8 @@ input:focus-visible+.box{outline:3px solid var(--blue);outline-offset:2px}
 .course-toggle:checked+.course-box::after{content:"✓";font-size:13px;font-weight:800;line-height:1}
 .course-copy{min-width:0;display:block}
 .course-copy strong{font-size:.9rem;font-weight:600}
+.topic.is-project{border-inline-start:3px solid var(--red);border-radius:6px;background:var(--grid)}
+.topic.is-project .topic-title::before{content:"🛠️ "}
 .course-item.done .course-copy strong{text-decoration:line-through;color:var(--muted)}
 .course-ref{margin:0 0 2px;font-size:.73rem;color:var(--blue);overflow-wrap:anywhere}
 @media(max-width:540px){.courses{padding-left:28px}.topic-label{gap:9px;padding-inline:4px}.course-label{padding-inline:4px}}
@@ -126,7 +128,7 @@ footer{text-align:center;padding:20px;font-size:.9rem;color:var(--muted)}
 <div class="wrap">
 <header class="top">
 <h1>🕷️ Spider-Verse Data Engineering Roadmap 🕸️</h1>
-<p>Oct 2026 → Jul 2027 · 5 days a week · 3–4 h a day</p>
+<p>Oct 20, 2026 → Aug 2027 · 5 days a week · 3–4 h a day · a project at the end of every mission</p>
 <a class="career" href="career.html">🕸️ Career Vision →</a>
 <div class="style-picker" role="group" aria-label="Choose website style">
 <span class="style-label">STYLE</span>
@@ -136,57 +138,151 @@ footer{text-align:center;padding:20px;font-size:.9rem;color:var(--muted)}
 </div>
 </header>
 <section class="progress">
-<div class="ptop"><span>🕷️ Spider-Sense Sync</span><span><b id="pct">0%</b> · <span id="cnt">0 / 0 courses</span></span></div>
+<div class="ptop"><span>🕷️ Spider-Sense Sync</span><span><b id="pct">0%</b> · <span id="cnt">0 / 0 steps</span></span></div>
 <div class="track" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div id="bar"></div></div>
 <p id="quote"></p>
 <button class="reset" id="reset" type="button">Reset progress 🔄</button>
 </section>
-<p class="checklist-hint">Click a topic’s large box to toggle all its courses, or use the smaller boxes to track courses separately.</p>
+<p class="checklist-hint">Click a topic’s large box to toggle all its steps, or use the smaller boxes to track each course, week or project milestone separately.</p>
 <main id="missions"></main>
 <footer>🕸️ Spider-Verse Data Engineering Tracker • Built for High Performance &amp; Pure Action ⚡</footer>
 </div>
 <div id="toast" role="status" aria-live="polite"></div>
 <script>
-const KEY="spiderverse-roadmap-v6";
-const LEGACY_KEY="spiderverse-roadmap-v5";
-const ce=(p,n,t,f)=>`Coursera → ${p} → Course ${n} of ${t}: ${f}`;
+const KEY="spiderverse-roadmap-v7";
+const ce=(p,n,t,f)=>`Coursera → ${p} → Course ${n} of ${t}||${f}`;
 const de=(n,f)=>ce("IBM Data Engineering",n,16,f);
 const da=(n,f)=>ce("IBM Data Analyst",n,11,f);
 const mt=(n,f)=>ce("Meta Database Engineer",n,9,f);
 const dk=(n,f)=>ce("Duke Python, Bash and SQL Essentials",n,4,f);
+const cs=(n,t)=>`CS50P → cs50.harvard.edu/python → Week ${n}||${t}: watch the lecture and the shorts, then submit the problem set.`;
+const pj=(p,n,t,f)=>`Project ${p} → Milestone ${n} of ${t}||${f}`;
+const DONE=" {{done}}",LK=k=>` {{link:${k}}}`;
 const L=(...a)=>a.map((x,k)=>`${k+1}. ${x}`).join("<br>");
+const P=(p,a)=>L(...a.map((f,k)=>pj(p,k+1,a.length,f)));
 const missions=[
-{t:"Python, Linux & Git",r:"Oct 1 – Nov 5",n:"Pace: 5 study days a week, 3–4 hours a day (about 17.5 hours a week). CS50P takes about 12 days at this pace: do every problem set and keep the final project for the last day. Already completed: IBM Data Engineering courses 1 and 2, and IBM Data Analyst course 4.",i:[
-["Python fundamentals","CS50P · DE 3",L("cs50.harvard.edu/python → Lectures 0–9 (functions, conditionals, loops, exceptions, libraries, unit tests, file I/O, regex, OOP, et cetera), then Problem Sets 0–9 and the final project.",de(3,"Python Project for Data Engineering (94% done, submit it today)")),"Oct 1–13 · ~31h"],
-["Python for data analysis","Udemy · Duke 1 · DA 5",L("Udemy: Python for Data Analysis and Data Science (about 6 hours): NumPy, Pandas and plotting.",dk(1,"Python and Pandas for Data Engineering (graded quizzes first)"),da(5,"Python Project for Data Science (fast-track)")),"Oct 14–23 · ~25h"],
-["Linux and Bash","Duke 2 · DE 6",L(dk(2,"Linux and Bash for Data Engineering: command line, scripts, cron, grep"),de(6,"Hands-on Introduction to Linux Commands and Shell Scripting (labs first)")),"Oct 24–30 · ~18h"],
-["Git and GitHub","Meta 2",L(mt(2,"Version Control: commits, branches, merges and pull requests")),"Oct 31 – Nov 5 · ~16h"]]},
-{t:"Relational Databases & SQL, Part 1",r:"Nov 6 – Dec 19",n:"Inside each topic, start with the course that teaches it best, then use the overlapping course as a fast-track: graded quizzes and labs first.",i:[
-["Database fundamentals and SQL","Meta 1, 3 · DE 4, 5 · DA 6",L(mt(1,"Introduction to Databases"),de(4,"Introduction to Relational Databases (RDBMS) (fast-track)"),mt(3,"Database Structures and Management with MySQL"),de(5,"Databases and SQL for Data Science with Python (fast-track). Same course as IBM Data Analyst course 6, so it counts once.")),"Nov 6 – Dec 4 · ~71h"],
-["Data modeling","Meta 7",L(mt(7,"Advanced Data Modeling: ER diagrams, normalization 1NF to 3NF and schemas")),"Dec 5–10 · ~15h"],
-["Advanced MySQL","Meta 4",L(mt(4,"Advanced MySQL Topics: stored procedures, indexes, transactions and views")),"Dec 11–19 · ~20h"]]},
-{t:"Exam Season",r:"Dec 20 – Jan 22",n:"Exam freeze (exams on Dec 27, 29, 30 and Jan 11, 14, 22): pause the Coursera programs and do 1–2 hours of freeCodeCamp a day, only when you are free.",i:[
-["Python v9 modules and labs","freeCodeCamp",L("freecodecamp.org/learn → Python v9 certification: lessons, workshops (such as Report Card Printer), labs and quizzes in order. Continue where you stopped."),"Dec 20 – Jan 22 · 1–2h/day"]]},
-{t:"Databases Part 2 & Python Depth",r:"Jan 23 – Mar 10",i:[
-["Python v9 projects and exam","freeCodeCamp",L("Same certification page: complete the 5 required projects, pass the exam and claim the certificate."),"Jan 23–27 · ~12h"],
-["Database administration","DE 7",L(de(7,"Relational Database Administration (DBA): backup, security and tuning for MySQL, PostgreSQL and Db2")),"Jan 28 – Feb 2 · ~15h"],
-["Python with databases","Meta 5, 6 · Duke 3",L(mt(5,"Programming in Python (quizzes first)"),mt(6,"Database Clients: connect Python to MySQL"),dk(3,"Scripting with Python and SQL for Data Engineering")),"Feb 3–19 · ~41h"],
-["Database capstone and interviews","Meta 8, 9",L(mt(8,"Database Engineer Capstone: publish it on GitHub"),mt(9,"Coding Interview Preparation: final course, then the Meta certificate")),"Feb 20 – Mar 3 · ~30h"],
-["Web apps and command-line tools","Duke 4",L(dk(4,"Web Applications and Command-Line Tools for Data Engineering: build a web app and a CLI tool, then the Duke certificate")),"Mar 4–10 · ~18h"]]},
-{t:"Pipelines, Warehousing & BI",r:"Mar 11 – Apr 22",i:[
-["ETL and data pipelines","DE 8",L(de(8,"ETL and Data Pipelines with Shell, Airflow and Kafka: Bash ETL, Airflow DAGs and Kafka streaming labs")),"Mar 11–22 · ~30h"],
-["Data warehousing","DE 9",L(de(9,"Data Warehouse Fundamentals: star and snowflake schemas, data marts, materialized views, CUBE and ROLLUP")),"Mar 23–29 · ~16h"],
-["BI, dashboards and analytics basics","DA 1, 2, 3 · DE 10",L(da(1,"Introduction to Data Analytics"),da(2,"Excel Basics for Data Analysis"),da(3,"Data Visualization and Dashboards with Excel and Cognos"),de(10,"BI Dashboards with IBM Cognos Analytics and Google Looker (build them on top of your warehouse)")),"Mar 30 – Apr 22 · ~61h"]]},
-{t:"NoSQL, Big Data & Data Analysis",r:"Apr 23 – Jun 23",n:"The IBM Data Engineering certificate lands after course 16 and the Data Analyst certificate after course 11. If second-term exams fall in this window, pause and shift the dates.",i:[
-["NoSQL databases","DE 11",L(de(11,"Introduction to NoSQL Databases: MongoDB and Cassandra hands-on labs")),"Apr 23–28 · ~15h"],
-["Big data with Spark and Hadoop","DE 12, 13",L(de(12,"Introduction to Big Data with Spark and Hadoop: HDFS, Hive and PySpark"),de(13,"Machine Learning with Apache Spark: SparkML and streaming labs")),"Apr 29 – May 14 · ~40h"],
-["Data analysis and visualization with Python","DA 7, 8",L(da(7,"Data Analysis with Python: Pandas, NumPy and EDA"),da(8,"Data Visualization with Python: Matplotlib, Seaborn and dashboards")),"May 15–30 · ~38h"],
-["Course capstones","DE 14 · DA 9",L(de(14,"Data Engineering Capstone Project: publish it on GitHub"),da(9,"IBM Data Analyst Capstone Project: publish the report")),"May 31 – Jun 15 · ~40h"],
-["GenAI and career prep","DE 15, 16 · DA 10, 11",L(de(15,"Generative AI: Elevate Your Data Engineering Career"),de(16,"Data Engineering Career Guide and Interview Preparation"),da(10,"Generative AI: Enhance Your Data Analytics Career"),da(11,"Data Analyst Career Guide and Interview Preparation (final course)")),"Jun 16–23 · ~20h"]]},
-{t:"Final Capstone: Become the Data Engineer",r:"Jun 24 – Jul 27",n:"Not covered by the courses: dbt, a cloud warehouse (BigQuery or Snowflake), Docker and cloud basics. Add them here.",i:[
-["Build the pipeline","Portfolio","Ingest a real API or dataset with Python, orchestrate it with Airflow, load a star schema in PostgreSQL or MySQL, and package it with Docker.","Jun 24 – Jul 9 · ~40h"],
-["Model and present","Portfolio","Add dbt or SQL views, load into BigQuery, build a dashboard, and write a README with an architecture diagram.","Jul 10–21 · ~30h"],
-["Job-ready package","Portfolio","Polish GitHub, CV and LinkedIn, list all certificates, and practise SQL and Python interview questions.","Jul 22–27 · ~15h"]]}
+{t:"Python Foundations",r:"Oct 20 – Oct 31",n:"CS50P week 0 is done, so weeks 1 to 9 and the final project need about 28 hours: roughly 8 study days. Submit IBM DE course 3 first, it is 94% done and takes about an hour.",i:[
+["Already completed","IBM DE","Done ✓",L(
+de(1,"Introduction to Data Engineering"+DONE),
+de(2,"Python for Data Science, AI and Development. Same course as IBM Data Analyst course 4."+DONE+LK("ibm-python")))],
+["CS50P: weeks 1 to 5","CS50P · DE 3","Oct 20–25 · ~15h",L(
+de(3,"Python Project for Data Engineering: 94% done, submit it first (about an hour)."),
+cs(0,"Functions and Variables")+DONE,
+cs(1,"Conditionals"),
+cs(2,"Loops"),
+cs(3,"Exceptions"),
+cs(4,"Libraries"),
+cs(5,"Unit Tests"))],
+["CS50P: weeks 6 to 9 and final project","CS50P","Oct 26–31 · ~14h",L(
+cs(6,"File I/O"),
+cs(7,"Regular Expressions"),
+cs(8,"Object-Oriented Programming"),
+cs(9,"Et Cetera"),
+"CS50P → cs50.harvard.edu/python → Final Project||Build your own Python project, test it with pytest and put it on GitHub with a README.")]]},
+{t:"SQL, Linux & Data Modeling",r:"Nov 1 – Dec 19",n:"Meta courses get full depth. IBM DE courses 4, 5 and 6 are fast-track: open the graded quizzes and labs first and skip the videos you already know. IBM DE 5 and IBM DA 6 are the same course, so checking one checks the other. Real company data is hard to get: use a public dataset (Olist Brazilian E-Commerce on Kaggle or UCI Online Retail II) and generate extra rows with Python Faker.",i:[
+["Python for data analysis","Udemy","Nov 1–3 · ~8h",L(
+"Udemy → Python for Data Analysis and Data Science (about 6 hours)||NumPy, Pandas and plotting. Code along with every exercise, then finish one notebook on a public dataset.")],
+["SQL fundamentals","Meta 1, 3 · DE 4, 5","Nov 4–24 · ~52h",L(
+mt(1,"Introduction to Databases: fast-track, graded quizzes first."),
+de(4,"Introduction to Relational Databases (RDBMS): fast-track, quizzes first."),
+mt(3,"Database Structures and Management with MySQL: DDL, DML, joins and functions."),
+de(5,"Databases and SQL for Data Science with Python: fast-track, quizzes first. Same course as IBM Data Analyst course 6."+LK("ibm-sql")))],
+["Linux, Bash and Git","DE 6 · Meta 2","Nov 25 – Dec 3 · ~22h",L(
+de(6,"Hands-on Introduction to Linux Commands and Shell Scripting: fast-track, labs first."),
+mt(2,"Version Control: commits, branches, merges and pull requests."))],
+["Data modeling","Meta 7","Dec 4–9 · ~15h",L(
+mt(7,"Advanced Data Modeling: ER diagrams, normalization from 1NF to 3NF and schemas. Take it before the warehouse course."))],
+["Project 1: E-commerce Database","Project 1","Dec 10–19 · ~25h",P(1,[
+"Pick a public dataset (Olist Brazilian E-Commerce or UCI Online Retail II) and create the GitHub repo.",
+"Draw the ER diagram and design a normalized schema (3NF) for customers, orders, products and payments.",
+"Create the schema in MySQL and load the data with a Python script that also cleans it.",
+"Write 15 analytical SQL queries (joins, aggregations, window functions) and add indexes where they help.",
+"Write the README: ER diagram, setup steps and query results."])]]},
+{t:"Exam Season",r:"Dec 20 – Jan 22",n:"Exam freeze (exams on Dec 27, 29, 30 and Jan 11, 14, 22): no Coursera. Do 1 to 2 hours of freeCodeCamp a day, only on days without an exam.",i:[
+["freeCodeCamp Python v9: modules and labs","freeCodeCamp","Dec 20 – Jan 22 · 1–2h/day",L(
+"freeCodeCamp → freecodecamp.org/learn/python-v9||Lessons, workshops (such as Report Card Printer), labs and quizzes in order. Continue from where you stopped.")]]},
+{t:"Pipelines & Warehousing",r:"Jan 23 – Feb 14",n:"Winter break burst: about 36 hours a week (6 days, 6 hours). Docker is not covered by the courses: spend 2 to 3 hours on a docker-compose tutorial before the last milestone of Project 2.",i:[
+["Database administration","DE 7","Jan 23–25 · ~15h",L(
+de(7,"Relational Database Administration (DBA): backup, security and tuning for MySQL, PostgreSQL and Db2."))],
+["ETL and data pipelines","DE 8","Jan 26 – Feb 1 · ~30h",L(
+de(8,"ETL and Data Pipelines with Shell, Airflow and Kafka: Bash ETL, Airflow DAGs and Kafka streaming labs."))],
+["Warehousing and BI","DE 9, 10","Feb 2–7 · ~31h",L(
+de(9,"Data Warehouse Fundamentals: star and snowflake schemas, data marts, materialized views, CUBE and ROLLUP."),
+de(10,"BI Dashboards with IBM Cognos Analytics and Google Looker: keep it short, you build a real dashboard in Project 2."))],
+["NoSQL","DE 11","Feb 8–10 · ~15h",L(
+de(11,"Introduction to NoSQL Databases: MongoDB and Cassandra hands-on labs."))],
+["Project 2: Sales Data Warehouse Pipeline","Project 2","Feb 11–14 · ~22h",P(2,[
+"Design a star schema (fact_orders with customer, product and date dimensions) on top of Project 1.",
+"Write an Airflow DAG that extracts from the Project 1 database, transforms with Pandas and loads into PostgreSQL.",
+"Add data quality checks, a daily schedule and retries.",
+"Build a dashboard in Looker Studio or Metabase: revenue over time, top products and delivery time.",
+"Run everything with docker-compose and write the README with an architecture diagram."])]]},
+{t:"Big Data & the IBM DE Certificate",r:"Feb 15 – Apr 1",n:"Term 2 pace: 17.5 hours a week. The IBM DE certificate is finished at the end of this mission. That is your job-ready point: start applying for summer internships in April with Projects 1 to 3 on GitHub.",i:[
+["Spark and Hadoop","DE 12, 13","Feb 15 – Mar 2 · ~40h",L(
+de(12,"Introduction to Big Data with Spark and Hadoop: HDFS, Hive and PySpark."),
+de(13,"Machine Learning with Apache Spark: SparkML and streaming labs."))],
+["IBM DE capstone and career","DE 14, 15, 16","Mar 3–14 · ~30h",L(
+de(14,"Data Engineering Capstone Project: put it on GitHub as its own repo."),
+de(15,"Generative AI: Elevate Your Data Engineering Career."),
+de(16,"Data Engineering Career Guide and Interview Preparation: final course, then the IBM DE certificate."))],
+["Project 3: Real-time Orders Stream","Project 3","Mar 15 – Apr 1 · ~42h",P(3,[
+"Write a Python generator (with Faker) that sends realistic order events to a Kafka topic.",
+"Read the topic with Spark Structured Streaming and compute 5-minute revenue and order counts.",
+"Write the results into the Project 2 warehouse (or Parquet files) and handle late or duplicate events.",
+"Add a live panel to the dashboard.",
+"Package it with docker-compose, record a short demo GIF and write the README with an architecture diagram."])]]},
+{t:"Database Engineering Depth",r:"Apr 2 – May 13",n:"Provisional: term 2 exams about May 14 to Jun 5, so the roadmap pauses after this mission. Send the real dates and everything after this point shifts.",i:[
+["Advanced MySQL and Python clients","Meta 4, 5, 6","Apr 2–19 · ~43h",L(
+mt(4,"Advanced MySQL Topics: stored procedures, indexes, transactions and views."),
+mt(5,"Programming in Python: take the graded quizzes first, CS50P already covered most of it."),
+mt(6,"Database Clients: connect Python to MySQL and run queries from code."))],
+["Meta capstone and interviews","Meta 8, 9","Apr 20 – May 1 · ~30h",L(
+mt(8,"Database Engineer Capstone: put it on GitHub."),
+mt(9,"Coding Interview Preparation: final course, then the Meta certificate."))],
+["Project 4: Warehouse Data API","Project 4","May 2–13 · ~28h",P(4,[
+"Build a Flask or FastAPI service with endpoints on the warehouse: revenue by day, top products and customer orders.",
+"Add input validation, pagination and pytest tests.",
+"Find slow queries with EXPLAIN, add indexes and record the timings before and after.",
+"Run it in Docker and publish the README with a screenshot of the API docs."])]]},
+{t:"Python Automation",r:"Jun 6 – Jul 5",n:"Duke is fast-track: take the graded quizzes and labs first, because CS50P and IBM DE already cover most of Python and Linux. Duke course 1 is about 52 hours in full, so only do the parts you need.",i:[
+["Duke fast-track","Duke 1 to 4","Jun 6–22 · ~44h",L(
+dk(1,"Python and Pandas for Data Engineering: quizzes and Pandas labs first."),
+dk(2,"Linux and Bash for Data Engineering: fast-track, labs only."),
+dk(3,"Scripting with Python and SQL for Data Engineering."),
+dk(4,"Web Applications and Command-Line Tools for Data Engineering: then the Duke certificate."))],
+["freeCodeCamp projects and exam","freeCodeCamp","Jun 23–27 · ~12h",L(
+"freeCodeCamp → freecodecamp.org/learn/python-v9||Build the 5 required certification projects.",
+"freeCodeCamp → freecodecamp.org/learn/python-v9||Pass the final exam and claim the Python certificate.")],
+["Project 5: Pipeline CLI","Project 5","Jun 28 – Jul 5 · ~20h",P(5,[
+"Build a Python command-line tool (argparse or Click) that runs the pipeline, backfills a date range and checks data quality.",
+"Add logging and a Bash wrapper scheduled with cron.",
+"Add pytest tests and a GitHub Actions workflow that runs them on every push.",
+"Write the README with usage examples."])]]},
+{t:"Analytics & Job-Ready",r:"Jul 6 – Aug 26",n:"IBM DA is fast-track: graded quizzes and labs first. Course 4 is already done and course 6 is the same as IBM DE 5, so both are checked for you once the other side is done. Final date depends on how long the term 2 exams take.",i:[
+["Analytics foundations","DA 1 to 6","Jul 6–15 · ~25h",L(
+da(1,"Introduction to Data Analytics: fast-track."),
+da(2,"Excel Basics for Data Analysis: fast-track, only what you do not know."),
+da(3,"Data Visualization and Dashboards with Excel and Cognos: fast-track, labs only."),
+da(4,"Python for Data Science, AI and Development. Same course as IBM DE 2."+DONE+LK("ibm-python")),
+da(5,"Python Project for Data Science: submit the project."),
+da(6,"Databases and SQL for Data Science with Python. Same course as IBM DE 5."+LK("ibm-sql")))],
+["Python analysis","DA 7, 8","Jul 16–27 · ~30h",L(
+da(7,"Data Analysis with Python: Pandas, NumPy and exploratory analysis."),
+da(8,"Data Visualization with Python: Matplotlib, Seaborn and dashboards."))],
+["IBM DA capstone and career","DA 9, 10, 11","Jul 28 – Aug 8 · ~30h",L(
+da(9,"IBM Data Analyst Capstone Project: put the report on GitHub."),
+da(10,"Generative AI: Enhance Your Data Analytics Career."),
+da(11,"Data Analyst Career Guide and Interview Preparation: final course, then the IBM DA certificate."))],
+["Project 6: Analytics Layer and Report","Project 6","Aug 9–20 · ~30h",P(6,[
+"Add a dbt project (or SQL views) on top of the warehouse: staging models first, then marts.",
+"Build the final dashboard with 5 business KPIs.",
+"Write a one-page business insights summary, like an analyst would hand to a manager.",
+"Publish the full platform repo with one diagram that connects Projects 1 to 6."])],
+["Job-ready package","Portfolio","Aug 21–26 · ~15h",L(
+"Portfolio → GitHub||Write the profile README and pin your 3 best repos.",
+"Portfolio → CV||Write a one-page CV with the projects and the certificates.",
+"Portfolio → LinkedIn||Update the profile and list every certificate.",
+"Portfolio → Interviews||Practise SQL and Python interview questions and apply to your first 10 roles.")]]}
 ];
 const quotes=[
 "Your Spider-Sense is tingling... time to swing into Data Engineering! 🕷️",
@@ -230,57 +326,57 @@ const cheers=[
 "Nothing stops a hero who shows up every day! 🕸️"
 ];
 const clears=[
-"MISSION 1 CLEARED! Web-slinging basics unlocked. The city is yours! 🕷️",
-"MISSION 2 CLEARED! The first half of the database web is spun! 🕸️",
+"MISSION 1 CLEARED! Python basics unlocked. The city is yours! 🕷️",
+"MISSION 2 CLEARED! Your first database project is live. Thwip! 🕸️",
 "MISSION 3 CLEARED! Exam season survived like a true hero! ⚡",
-"MISSION 4 CLEARED! Databases and Python mastered. Miles would be proud! 🚀",
-"MISSION 5 CLEARED! Pipelines, warehouses and dashboards: all swinging! 🔥",
-"MISSION 6 CLEARED! Big data conquered. Spider-Sense at max! 💥",
+"MISSION 4 CLEARED! A full pipeline and warehouse, built in one break! 🔥",
+"MISSION 5 CLEARED! IBM DE certificate earned and a streaming project shipped. Job-ready! 🚀",
+"MISSION 6 CLEARED! Database engineering depth unlocked. Miles would be proud! 💥",
+"MISSION 7 CLEARED! Automation mastered. The web runs itself now! 🤖",
 "FINAL MISSION CLEARED! You are a Data Engineer, Spider-Verse certified! 👑🕷️"
 ];
 const $=id=>document.getElementById(id);
-let courseN=0,taskN=0,cheer=0,timer=0,armed=0;const PRE=[],taskCourses=[];
+let courseN=0,taskN=0,cheer=0,timer=0,armed=0;const PRE=[];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
-function courseSteps(raw){
-const lines=String(raw).split("<br>").map(x=>x.replace(/^\d+\.\s*/,"").trim()).filter(Boolean);
-return lines.flatMap(line=>{
-const shared=line.match(/^(Coursera → IBM Data Engineering → Course 5 of 16:)(.*?)\. Same course as IBM Data Analyst course 6, so it counts once\.$/);
-if(!shared)return[line];
-const title=shared[2].replace(/\s*\(fast-track\)\s*$/,"");
-return[`${shared[1]} ${title} (fast-track)`,`Coursera → IBM Data Analyst → Course 6 of 11: ${title} (same course content, tracked as its own checklist entry)`];
-});
+function courseSteps(raw){return String(raw).split("<br>").map(x=>x.replace(/^\d+\.\s*/,"").trim()).filter(Boolean)}
+function courseMarkup(step){
+const id=courseN++,done=/\{\{done\}\}/.test(step),lk=step.match(/\{\{link:([\w-]+)\}\}/);
+const clean=step.replace(/\s*\{\{[^}]*\}\}/g,""),at=clean.indexOf("||");
+const reference=at>=0?clean.slice(0,at):"",description=at>=0?clean.slice(at+2):clean;
+if(done)PRE.push(id);
+return `<li class="course-item"><label class="course-label"><input class="course-toggle" type="checkbox" value="${id}"${lk?` data-link="${lk[1]}"`:""}><span class="box course-box"></span><span class="course-copy">${reference?`<small class="course-ref">${esc(reference)}</small>`:""}<strong>${esc(description)}</strong></span></label></li>`;
 }
-function courseMarkup(step,taskId,prechecked){
-const id=courseN++,parts=step.match(/^(.+?Course \d+ of \d+:)\s*(.*)$/),reference=parts?parts[1]:"",description=parts?parts[2]:step;
-taskCourses[taskId].push(id);if(prechecked)PRE.push(id);
-return `<li class="course-item"><label class="course-label"><input class="course-toggle" type="checkbox" value="${id}"><span class="box course-box"></span><span class="course-copy">${reference?`<small class="course-ref">${esc(reference)}</small>`:""}<strong>${esc(description)}</strong></span></label></li>`;
-}
-$("missions").innerHTML=missions.map((m,k)=>`<section class="mission"><div class="mh"><span class="badge">MISSION 0${k+1}</span><h2>${esc(m.t)}</h2><span class="range">${esc(m.r)}</span><span class="count"></span></div><ul>${m.i.map(([t,s,w,d,x])=>{const taskId=taskN++;taskCourses[taskId]=[];const courses=courseSteps(w);return `<li class="topic"><label class="topic-label"><input class="task-toggle" type="checkbox" value="${taskId}" aria-label="Mark all courses in ${esc(t)} complete"><span class="box topic-box"></span><span class="topic-copy"><span class="row"><b class="topic-title">${esc(t)}</b><i>${esc(s)}</i><i class="date">${esc(d)}</i></span></span></label><ul class="courses">${courses.map(step=>courseMarkup(step,taskId,x)).join("")}</ul></li>`}).join("")}</ul>${m.n?`<p class="note">${esc(m.n)}</p>`:""}</section>`).join("");
+$("missions").innerHTML=missions.map((m,k)=>`<section class="mission"><div class="mh"><span class="badge">MISSION 0${k+1}</span><h2>${esc(m.t)}</h2><span class="range">${esc(m.r)}</span><span class="count"></span></div><ul>${m.i.map(([t,s,d,w])=>{const taskId=taskN++;return `<li class="topic${/^Project/.test(s)?" is-project":""}"><label class="topic-label"><input class="task-toggle" type="checkbox" value="${taskId}" aria-label="Mark all steps in ${esc(t)} complete"><span class="box topic-box"></span><span class="topic-copy"><span class="row"><b class="topic-title">${esc(t)}</b><i>${esc(s)}</i><i class="date">${esc(d)}</i></span></span></label><ul class="courses">${courseSteps(w).map(courseMarkup).join("")}</ul></li>`}).join("")}</ul>${m.n?`<p class="note">${esc(m.n)}</p>`:""}</section>`).join("");
 const boxes=[...document.querySelectorAll(".course-toggle")],parents=[...document.querySelectorAll(".task-toggle")],sections=[...document.querySelectorAll(".mission")];
+const linked={};boxes.forEach(b=>{const k=b.dataset.link;if(k)(linked[k]=linked[k]||[]).push(b)});
 const reset=$("reset"),label=reset.textContent;
 function getSaved(){
-try{const current=JSON.parse(localStorage.getItem(KEY));if(Array.isArray(current))return current.map(Number);const old=JSON.parse(localStorage.getItem(LEGACY_KEY));if(Array.isArray(old))return old.flatMap(id=>taskCourses[Number(id)]||[])}catch(e){}
+try{const current=JSON.parse(localStorage.getItem(KEY));if(Array.isArray(current))return current.map(Number)}catch(e){}
 return PRE;
 }
 const saved=new Set(getSaved());
 boxes.forEach(b=>{b.checked=saved.has(+b.value)});
-function children(parent){return [...parent.closest(".topic").querySelectorAll(".course-toggle")];}
-function syncParents(){parents.forEach(parent=>{const kids=children(parent),done=kids.filter(x=>x.checked).length;parent.checked=kids.length>0&&done===kids.length;parent.indeterminate=done>0&&done<kids.length;parent.setAttribute("aria-checked",parent.indeterminate?"mixed":String(parent.checked));parent.closest(".topic").classList.toggle("is-complete",parent.checked)});}
+function children(parent){return [...parent.closest(".topic").querySelectorAll(".course-toggle")]}
+function mirror(b){const k=b.dataset.link;if(k)linked[k].forEach(x=>{x.checked=b.checked})}
+function syncParents(){parents.forEach(parent=>{const kids=children(parent),done=kids.filter(x=>x.checked).length;parent.checked=kids.length>0&&done===kids.length;parent.indeterminate=done>0&&done<kids.length;parent.setAttribute("aria-checked",parent.indeterminate?"mixed":String(parent.checked));parent.closest(".topic").classList.toggle("is-complete",parent.checked)})}
 function complete(section){const list=[...section.querySelectorAll(".course-toggle")];return list.length>0&&list.every(x=>x.checked)}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(boxes.filter(b=>b.checked).map(b=>+b.value)))}catch(e){}}
 function say(t){$("toast").textContent=t;$("toast").classList.add("show");clearTimeout(timer);timer=setTimeout(()=>$("toast").classList.remove("show"),4200)}
 function render(){
 const c=boxes.filter(b=>b.checked).length,p=boxes.length?Math.round(c/boxes.length*100):0;
-$("bar").style.width=p+"%";$("bar").parentElement.setAttribute("aria-valuenow",p);$("pct").textContent=p+"%";$("cnt").textContent=c+" / "+boxes.length+" courses";
+$("bar").style.width=p+"%";$("bar").parentElement.setAttribute("aria-valuenow",p);$("pct").textContent=p+"%";$("cnt").textContent=c+" / "+boxes.length+" steps";
 const quoteIndex=Math.round((boxes.length?c/boxes.length:0)*(quotes.length-1));$("quote").textContent=quotes[quoteIndex];
 boxes.forEach(b=>b.closest(".course-item").classList.toggle("done",b.checked));
-sections.forEach(s=>{const b=[...s.querySelectorAll(".course-toggle")];s.querySelector(".count").textContent=b.filter(x=>x.checked).length+" / "+b.length+" courses";s.classList.toggle("complete",complete(s))});
+sections.forEach(s=>{const b=[...s.querySelectorAll(".course-toggle")];s.querySelector(".count").textContent=b.filter(x=>x.checked).length+" / "+b.length+" steps";s.classList.toggle("complete",complete(s))});
 }
 function disarm(){clearTimeout(armed);armed=0;reset.textContent=label}
+boxes.forEach(mirror);
 syncParents();render();
-boxes.forEach(b=>b.addEventListener("change",()=>{const s=b.closest(".mission"),k=sections.indexOf(s),was=complete(s);save();syncParents();render();if(!b.checked)return;say(complete(s)&&!was?clears[k]:cheers[cheer++%cheers.length])}));
-parents.forEach(parent=>parent.addEventListener("change",()=>{const s=parent.closest(".mission"),k=sections.indexOf(s),was=complete(s);children(parent).forEach(b=>{b.checked=parent.checked});save();syncParents();render();if(!parent.checked)return;say(complete(s)&&!was?clears[k]:cheers[cheer++%cheers.length])}));
-reset.addEventListener("click",()=>{if(!armed){reset.textContent="Click again to confirm";armed=setTimeout(disarm,3000);return}boxes.forEach(b=>{b.checked=false});save();syncParents();render();disarm()});
+function announce(s,was,on){if(!on)return;const k=sections.indexOf(s);say(complete(s)&&!was?clears[k]:cheers[cheer++%cheers.length])}
+boxes.forEach(b=>b.addEventListener("change",()=>{const s=b.closest(".mission"),was=complete(s);mirror(b);save();syncParents();render();announce(s,was,b.checked)}));
+parents.forEach(parent=>parent.addEventListener("change",()=>{const s=parent.closest(".mission"),was=complete(s);children(parent).forEach(b=>{b.checked=parent.checked;mirror(b)});save();syncParents();render();announce(s,was,parent.checked)}));
+reset.addEventListener("click",()=>{if(!armed){reset.textContent="Click again to confirm";armed=setTimeout(disarm,3000);return}boxes.forEach(b=>{b.checked=false});boxes.forEach(b=>{if(PRE.includes(+b.value)){b.checked=true;mirror(b)}});save();syncParents();render();disarm()});
+
 
 const STYLE_KEY="spiderverse-roadmap-style",styleOptions=[...document.querySelectorAll(".style-option")],validStyles=["neon","comic","comic-night"];
 function setStyle(style,persist=true){const next=validStyles.includes(style)?style:"neon";document.documentElement.dataset.style=next;styleOptions.forEach(button=>{const active=button.dataset.styleOption===next;button.setAttribute("aria-pressed",String(active))});if(persist){try{localStorage.setItem(STYLE_KEY,next)}catch(e){}}}
